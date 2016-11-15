@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Decision Trees\n========================================================\n\nWe will have a look at the `Carseats` data using the `tree` package in R, as in the lab in the book.\nWe create a binary response variable `High` (for high sales), and we include it in the same dataframe.\n```{r}\nrequire(ISLR)\n#install.packages('tree', repos=\"http://cran.r-project.org\")\nrequire(tree)\nattach(Carseats)\nhist(Sales)\nHigh=ifelse(Sales<=8,\"No\",\"Yes\")\nCarseats=data.frame(Carseats, High)\n```\nNow we fit a tree to these data, and summarize and plot it. Notice that we have to _exclude_ `Sales` from the right-hand side of the formula, because the response is derived from it.\n```{r}\ntree.carseats=tree(High~.-Sales,data=Carseats)\nsummary(tree.carseats)\nplot(tree.carseats)\ntext(tree.carseats,pretty=0)\n```\nFor a detailed summary of the tree, print it:\n```{r}\ntree.carseats\n```\nLets create a training and test set (250,150) split of the 400 observations, grow the tree on the training set, and evaluate its performance on the test set.\n```{r}\nset.seed(1011)\ntrain=sample(1:nrow(Carseats),250)\ntree.carseats=tree(High~.-Sales,Carseats,subset=train)\nplot(tree.carseats);text(tree.carseats,pretty=0)\ntree.pred=predict(tree.carseats,Carseats[-train,],type=\"class\")\nwith(Carseats[-train,],table(tree.pred,High))\n(72+33)/150\n```\nThis tree was grown to full depth, and might be too variable. We now use CV to prune it.\n```{r}\ncv.carseats=cv.tree(tree.carseats,FUN=prune.misclass)\ncv.carseats\nplot(cv.carseats)\nprune.carseats=prune.misclass(tree.carseats,best=13)\nplot(prune.carseats);text(prune.carseats,pretty=0)\n```\nNow lets evaluate this pruned tree on the test data.\n```{r}\ntree.pred=predict(prune.carseats,Carseats[-train,],type=\"class\")\nwith(Carseats[-train,],table(tree.pred,High))\n(72+32)/150\n```\nIt has done about the same as our original tree. So pruning did not hurt us wrt misclassification errors, and gave us a simpler tree.\n\n",
+    "created" : 1479075526326.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1291083028",
+    "id" : "29F9B045",
+    "lastKnownWriteTime" : 1479075273,
+    "last_content_update" : 1479075273,
+    "path" : "~/Dropbox/cs451_fall_2016/trees/trees-introduction.Rmd",
+    "project_path" : "trees-introduction.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

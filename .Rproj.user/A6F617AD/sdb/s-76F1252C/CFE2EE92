@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Name: Tim Siwula\n# Lab 5: Trees\n# Ch8 - 8.4  \t   pg 332\n# Exercise 5:\n# ...\n# \n\n\n# Exercise 8:\n# ...\n#\n# Exercise 9:\n# ...\n",
+    "created" : 1479190518563.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1136481633",
+    "id" : "CFE2EE92",
+    "lastKnownWriteTime" : 1479190584,
+    "last_content_update" : 1479190637496,
+    "path" : "~/Dropbox/cs451_fall_2016/trees/lab6.R",
+    "project_path" : "lab6.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Name: Tim Siwula\n# Lab 6: Trees\n# \n# Exercise 5:\n#\n# Majority vote classification:\n# would be red given that the 10 estimates of X > 0.50%.\n# {0.55, 0.6, 0.6, 0.65, 0.7, 0.75} -> set/total -> 6/10: X >= 0.60%.\n#\n# Average probability classification:\n# would yeild a green class or not red class given that \n# (.1+.15+.2+.2+.55+.6+.6+.65+.75)/10 = 0.38 < 0.50%.\n#\n# Exercise 8:\n# Predict Sales using regression trees, treating the response as a quantiative variable.\n# \n# a) split the data set into training set and a test set.\nrequire(ISLR)\n#install.packages('tree', repos=\"http://cran.r-project.org\")\nrequire(tree)\nattach(Carseats)\nhist(Sales)\nplot(Sales)\nsummary(Sales)\n#see how many missing values\nsum(is.na(Sales))\nset.seed(1)\n# create a training set\ntraining = sample(1:nrow(Carseats), nrow(Carseats)/2)\ncarseats_regression_tree = tree(Sales~.,Carseats, subset=training)\nsummary(carseats_regression_tree)\n\n\n#b) fit a regression tree to the training set.\n# plot the tree, interpert the results. What test MSE do you obtain?\nplot(carseats_regression_tree)\ntext(carseats_regression_tree, pretty=0)\ncv.carseats=cv.tree(carseats_regression_tree)\nplot(cv.carseats$size, cv.carseats$Sales,type='b')\n\n# prune the tree\nprune.carseats=prune.tree(carseats_regression_tree,best=5)\nplot(prune.carseats)\ntext(prune.carseats,pretty=0)\nyhat=predict(carseats_regression_tree,newdata=Carseats[-training,])\ntest=Carseats[-training,\"Sales\"]\nplot(yhat,test)\nabline(0,1)\ntest_mse=mean((yhat-test)^2)\ntest_mse\n\n#\n# Exercise 9:\n# ...\n",
+    "created" : 1479138441304.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3938855836",
+    "id" : "B2E315F2",
+    "lastKnownWriteTime" : 1479216978,
+    "last_content_update" : 1479224356789,
+    "path" : "~/Downloads/lab6.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
